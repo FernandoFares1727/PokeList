@@ -19,14 +19,11 @@ body {
     flex-direction: column;
     min-height: 150px;
     justify-content: center;
-    margin: 0px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 12px;
-    padding-bottom: 24px;
-    gap: 15px;
     align-items: center;
-}
+    padding: 12px 12px 24px; /* Combine top/left/right padding */
+    gap: 15px;
+    margin: 0px;
+  }
 
 #pokeTitle {
     height: 56px;
@@ -77,31 +74,20 @@ body {
 
 /* Pokemon List */
 
-#pokeList {
-    background-color: var(--pokeListBody);
-    display: flex;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 12px;
-    padding-bottom: 24px;
-    border-radius: 8px;
-}
-
 li {
     list-style-type: none;
 }
 
 #pokeList {
+    background-color: var(--pokeListBody);
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
     gap: 13px;
-    flex-wrap: wrap;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-}
+    padding: 12px 12px 24px;
+    border-radius: 8px;
+  }  
 
 .pokeCard {
     border-radius: 8px;
@@ -132,9 +118,6 @@ li {
     text-transform: capitalize;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 4px;
-    padding-top: 24px;
+    padding: 8px 8px 4px 24px;
     font-size: 20px;
 }
