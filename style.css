@@ -82,7 +82,7 @@ li {
     background-color: var(--pokeListBody);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-between left;
     align-items: flex-end;
     gap: 13px;
     padding: 12px 12px 24px;

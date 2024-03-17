@@ -1,10 +1,15 @@
-const pokeRange = 700;
+const pokeRange = 900;
 
 const mainUrl = "https://pokeapi.co/api/v2/";
 const limitParam = "pokemon?limit=";
 
 const componentsFolder = "./Components/";
 const pokeCardPage = "pokeCard.html";
+
+const searchs = {
+    tagId : "tagid",
+    tagName : "tagName"
+};
 
 //const pokeInfo = "pokemon//"
 
@@ -54,4 +59,21 @@ function createPokemonCard(pokeData)
         pokeCard.style.order = pokeData.id;
         pokeList.appendChild(pokeCard);
     })
+}
+
+function changeSearch(element)
+{
+    var img = element.querySelector('img');
+    var actualSearch = img.getAttribute('id');
+
+    if (actualSearch == searchs.tagId)
+    {
+        img.src = "./images/tagName.svg";
+        img.setAttribute('id',searchs.tagName);
+    }
+    else
+    {
+        img.src = "./images/tag.svg";
+        img.setAttribute('id', searchs.tagId);
+    }
 }
