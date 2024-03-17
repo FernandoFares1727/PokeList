@@ -1,4 +1,4 @@
-const pokeRange = 200;
+const pokeRange = 700;
 
 const mainUrl = "https://pokeapi.co/api/v2/";
 const limitParam = "pokemon?limit=";
@@ -47,9 +47,11 @@ function createPokemonCard(pokeData)
         var pokeImg = pokeCard.querySelector('img');
 
         pokeName.textContent = pokeData.name;
-        pokeId.textContent = "#" + pokeData.order;
+        pokeId.textContent = "#" + pokeData.id;
         pokeImg.src = pokeData.sprites.front_default;
 
+
+        pokeCard.style.order = pokeData.id;
         pokeList.appendChild(pokeCard);
     })
 }
