@@ -4,7 +4,8 @@ const mainUrl = "https://pokeapi.co/api/v2/";
 const limitParam = "pokemon?limit=";
 
 const componentsFolder = "./Components/";
-const pokeCardPage = "pokeCard.html";
+const pokeCardFolder = "PokeCard/"
+const pokeCardPage = "index.html";
 
 const searchs = {
     tagId : "tagid",
@@ -39,7 +40,7 @@ function createPokemonCard(pokeData)
 {
     var pokeList = document.querySelector('#pokeList');
 
-    fetch(componentsFolder + pokeCardPage)
+    fetch(componentsFolder + pokeCardFolder + pokeCardPage)
     .then(response => response.text())
     .then(html => {
 
