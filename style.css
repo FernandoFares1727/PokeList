@@ -1,3 +1,4 @@
+@import url("./Components/PokeCard/style.css");
 
 :root {
     --bodyColor: #DC0A2D;
@@ -70,54 +71,4 @@ body {
 
 #search button:hover {
     background-color: var(--SearchButtonHover);
-}
-
-/* Pokemon List */
-
-li {
-    list-style-type: none;
-}
-
-#pokeList {
-    background-color: var(--pokeListBody);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between left;
-    align-items: flex-end;
-    gap: 13px;
-    padding: 12px 12px 24px;
-    border-radius: 8px;
-  }  
-
-.pokeCard {
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    box-shadow: var(--pokeCardShadow);
-    max-width: 250px;
-    max-height: 223.8px;
-}
-
-.pokeId {
-    margin : 0px;
-    text-align: right;
-    margin-right: 5px;
-    margin-top: 5px;
-}
-
-.pokeCard img {
-    min-width: 150px;
-    min-height: 150px;
-}
-
-.pokeName {
-    margin: 0px;
-    text-align: center;
-    background-color: var(--pokeCardColorBody);
-    text-transform: capitalize;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    padding: 8px 8px 4px 24px;
-    font-size: 20px;
 }
