@@ -6,6 +6,8 @@ const limitParam = "pokemon?limit=";
 const componentsFolder = "./Components/";
 const pokeCardFolder = "PokeCard/"
 const pokeCardPage = "index.html";
+const pokeDetailsFolder = "PokeDetails/";
+const pokeDetailsCardPage = "index.html";
 
 const searchs = {
     tagId : "tagId",
@@ -108,6 +110,13 @@ function createPokemonCard(pokeData)
 
 
         pokeCard.style.order = pokeData.id;
+        pokeCard.setAttribute('id', pokeData.id);
+
+        pokeCard.addEventListener('click', function() {
+            var pokemonId = pokeCard.getAttribute('id');
+            showPokeDetails(pokemonId);
+        })
+
         pokeList.appendChild(pokeCard);
     })
 }
@@ -127,4 +136,122 @@ function changeSearch(element)
         img.src = "./images/tag.svg";
         img.setAttribute('id', searchs.tagId);
     }
+}
+
+function showPokeDetails(pokeId)
+{
+    fetch(mainUrl + "pokemon" + "/" + pokeId + "/")
+    .then(response => response.json())
+    .then(function(pokeData) {
+        createPokemonDetails(pokeData);
+    })
+}
+
+function createPokemonDetails(pokeData)
+{
+    fetch(componentsFolder + pokeCardFolder + pokeDetailsFolder + pokeDetailsCardPage)
+    .then(response => response.text())
+    .then(async html => {
+
+        var pokeDetails = document.createElement('div');
+        pokeDetails.classList.add('pokeDetails');
+
+        pokeDetails.innerHTML = html;
+        var turnBackButton = pokeDetails.querySelector('button');
+
+        turnBackButton.addEventListener('click', function() {
+            removePokeDetails();
+        })
+
+        var pokeDetailsName = pokeDetails.querySelector('.pokeDetailsName');
+        pokeDetailsName.textContent = pokeData.name;
+
+        var pokeDetailsId = pokeDetails.querySelector('.pokeDetailsId');
+        pokeDetailsId.textContent = "#" + pokeData.id;
+
+        var pokeDetailsImage = pokeDetails.querySelector('.pokeDetailsImage').querySelector('img');
+        pokeDetailsImage.src = pokeData.sprites.front_default;
+
+        /* construct pokeDetailsCard */
+
+        var pokeDetailsCard = pokeDetails.querySelector('.pokeDetailsCardInfo');
+        
+        /* construct pokeDetailsTypes */
+
+        var pokeDetailsCardTypes = pokeDetailsCard.querySelector('.pokeDetailsCardTypes');
+        var types = pokeData.types;
+
+        types.forEach(type => {
+            var pokeDetailsCardTypeElement = document.createElement('p');
+            pokeDetailsCardTypeElement.textContent = type.type.name;
+            pokeDetailsCardTypes.appendChild(pokeDetailsCardTypeElement);
+        })
+
+        /* construct pokeDetailsAtributes */
+
+        var pokeDetailsCardWeight = pokeDetailsCard.querySelector('.pokeDetailsCardWeightValue');
+        pokeDetailsCardWeight.textContent = pokeData.weight/10 + "kg";
+
+        var pokeDetailsHeight = pokeDetailsCard.querySelector('.pokeDetailsCardHeightValue');
+        pokeDetailsHeight.textContent = pokeData.height/10 + "m";
+
+        var pokeDetailsMoves = pokeDetails.querySelector('.pokeDetailsCardMovesValue');
+        var moves = pokeData.moves;
+
+        let count = 0;
+        moves.forEach(move => {
+            if (count < 3) {
+                var pokeDetailsCardMoveElement = document.createElement('p');
+                pokeDetailsCardMoveElement.textContent = move.move.name;
+                pokeDetailsMoves.appendChild(pokeDetailsCardMoveElement);
+                count++;
+            } else {
+                return; // Exit the loop early
+            }
+        });
+
+        /* construct description */
+
+        var pokemonDescription = await getPokemonDescription(pokeData.id);
+        var pokeDetailsCardDescription = pokeDetailsCard.querySelector('.pokeDetailsCardDescription');
+        pokeDetailsCardDescription.textContent = pokemonDescription;
+
+        /* construct base stats */
+
+        var pokeDetailsCardStatsLabels = pokeDetailsCard.querySelector('.pokeDetailsCardStatsLabels');
+        var pokeDetailsCardStatsValues = pokeDetailsCard.querySelector('.pokeDetailsCardStatsValues');
+
+        console.log(pokeDetailsCardStatsLabels);
+        console.log(pokeDetailsCardStatsValues);
+
+        var stats = pokeData.stats;
+
+        stats.forEach(stat => {
+
+            var statLabel = document.createElement('p');
+            statLabel.textContent = stat.stat.name;
+            pokeDetailsCardStatsLabels.appendChild(statLabel);
+
+            var statValue = document.createElement('p');
+            statValue.textContent = stat.base_stat;
+            pokeDetailsCardStatsValues.appendChild(statValue);
+
+        })
+
+        document.body.appendChild(pokeDetails);
+    })
+}
+
+function removePokeDetails()
+{
+    var pokeDetails = document.querySelector('.pokeDetails');
+    document.body.removeChild(pokeDetails);
+}
+
+async function getPokemonDescription(pokeId) {
+  return fetch(mainUrl + "pokemon-species/" + pokeId + "/")
+    .then(response => response.json())
+    .then(function(result) { 
+        return result.flavor_text_entries[0].flavor_text
+    });
 }
