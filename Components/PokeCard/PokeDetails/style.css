@@ -1,0 +1,185 @@
+
+:root {
+    --pokeDetailsBackGroundColor: #B8B8B8;
+    --textColor: #FFFFFF;
+}
+
+.pokeDetails {
+    min-width: 300px;
+    min-height: 400px;
+    background-color: var(--pokeDetailsBackGroundColor);
+    margin: 0px;
+    padding: 4px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .pokeDetailsPokeBall {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    opacity: 0.5;
+    height: 170px;
+    width: 170px;
+  }  
+
+  .pokeTitle {
+    display: flex;
+    margin: 0px;
+    gap: 8px;
+    height: 32px;
+    color: var(--textColor);
+    align-items: center;
+    text-transform: capitalize;
+    font-size: 26px;
+  }
+
+  .pokeDetailsName {
+    flex: 1;
+    margin: 0px;
+  }
+
+  .pokeDetailsId {
+    margin: 0px;
+  }
+
+  .pokeDetails button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: Transparent;
+    border: none;
+  }
+
+  .pokeDetailsImage {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pokeDetailsImage img {
+    min-width: 150px;
+    min-height: 150px;
+    max-width: 250px;
+    max-height: 223.8px;
+    display: flex;
+  }
+
+  .pokeDetailsCardInfo
+  {
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--textColor);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .pokeDetailsCardInfo p {
+    text-align: center;
+  }
+
+  .pokeDetailsCardTypes {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    text-transform: capitalize;
+  }
+
+  .pokeDetailsCardTypes p {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 10px;
+    background-color: var(--pokeDetailsBackGroundColor);
+    color: var(--textColor);
+  }
+
+  .about {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pokeDetailsCardAtributes {
+    display: flex;
+  }
+
+  .pokeDetailsCardAtributes hr {
+    margin-bottom : 0px;
+  }
+
+  .pokeDetailsCardAtributesGrid
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pokeDetailsCardAtributesGridValue
+  {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .pokeDetailsCardAtributeDescription {
+    margin-bottom: 0px;
+    text-align: center;
+  }
+
+  .pokeDetailsCardMovesValue 
+  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pokeDetailsCardMovesValue p 
+  {
+    margin: 0px;
+  }
+
+  .pokeDetailsCardDescription {
+    max-width: 260px;
+  }
+
+  .pokeDetailsCardStats 
+  {
+    display: flex;
+    gap: 8px;
+  }
+
+  .pokeDetailsCardStats  p 
+  {
+    margin: 0px;
+    text-transform: capitalize;
+    font-size: 16px;
+  }
+
+  .pokeDetailsCardStats hr {
+    margin: 0px;
+  }
+
+  .pokeDetailsCardStatsValues 
+  {
+    flex: 1;
+  }
+
+  .pokeDetailsCardStatsRows 
+  {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .pokeDetailsCardStatsRows div
+  {
+    background-color: var(--pokeDetailsBackGroundColor);
+    height: 8px;
+  }
