@@ -1,13 +1,11 @@
 
 :root {
-    --pokeDetailsBackGroundColor: #B8B8B8;
     --textColor: #FFFFFF;
 }
 
 .pokeDetails {
     min-width: 300px;
     min-height: 400px;
-    background-color: var(--pokeDetailsBackGroundColor);
     margin: 0px;
     padding: 4px;
     position: fixed;
@@ -97,7 +95,6 @@
     padding-top: 2px;
     padding-bottom: 2px;
     border-radius: 10px;
-    background-color: var(--pokeDetailsBackGroundColor);
     color: var(--textColor);
   }
 
@@ -180,6 +177,5 @@
 
   .pokeDetailsCardStatsRows div
   {
-    background-color: var(--pokeDetailsBackGroundColor);
     height: 8px;
   }
