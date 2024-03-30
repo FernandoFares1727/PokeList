@@ -23,6 +23,27 @@ const pokeAtributesLabels = {
     speed : "SPD"
 };
 
+const pokeTypeColors = {
+    normal: "#AAA67F",
+    fighting: "#C12239",
+    flying: "A891EC",
+    ground: "#DEC16B",
+    poison: "#A43E9E",
+    rock: "#B69E31",
+    bug: "#A7B723",
+    ghost: "#70559B",
+    steel: "#B7B9D0",
+    fire: "#F57D31",
+    water: "#6493EB",
+    grass: "#74CB48",
+    eletric: "#F9CF30",
+    psychic: "#FB5584",
+    ice: "#9AD6DF",
+    dragon: "#7037FF",
+    dark: "#75574C",
+    fairy: "#E69EAC"
+}
+
 loadPage();
 
 function loadPage()
@@ -190,11 +211,24 @@ function createPokemonDetails(pokeData)
         var pokeDetailsCardTypes = pokeDetailsCard.querySelector('.pokeDetailsCardTypes');
         var types = pokeData.types;
 
+        var pokeDetailsCardMainType = types[0].type.name;
+        pokeDetails.setAttribute('mainType', pokeDetailsCardMainType);
+
+        var mainTypeColor = getPokeCardColor(pokeDetailsCardMainType);
+        pokeDetails.style.backgroundColor = mainTypeColor;
+
         types.forEach(type => {
             var pokeDetailsCardTypeElement = document.createElement('p');
-            pokeDetailsCardTypeElement.textContent = type.type.name;
+            var typeName = type.type.name;
+            pokeDetailsCardTypeElement.textContent = typeName;
+            var typeColor = getPokeCardColor(typeName);
+            pokeDetailsCardTypeElement.style.backgroundColor = typeColor;
             pokeDetailsCardTypes.appendChild(pokeDetailsCardTypeElement);
         })
+
+        var pokeDetailsCardAbout = pokeDetails.querySelector('.about');
+        console.log(pokeDetailsCardAbout);
+        pokeDetailsCardAbout.style.color = mainTypeColor;
 
         /* construct pokeDetailsAtributes */
 
@@ -227,6 +261,9 @@ function createPokemonDetails(pokeData)
 
         /* construct base stats */
 
+        var pokeDetailsCardStats = pokeDetails.querySelector('.stats');
+        pokeDetailsCardStats.style.color = mainTypeColor;
+
         var pokeDetailsCardStatsLabels = pokeDetailsCard.querySelector('.pokeDetailsCardStatsLabels');
         var pokeDetailsCardStatsValues = pokeDetailsCard.querySelector('.pokeDetailsCardStatsValues');
 
@@ -241,6 +278,7 @@ function createPokemonDetails(pokeData)
             var statName = getShortPokeAtribute(statIndex);
 
             statLabel.textContent = statName;
+            statLabel.style.color = mainTypeColor;
             pokeDetailsCardStatsLabels.appendChild(statLabel);
 
             var statGrafic = document.createElement('div');
@@ -253,6 +291,7 @@ function createPokemonDetails(pokeData)
 
             var statGraficBar = document.createElement('div');
             statGraficBar.style.width = statPercentValue + "%";
+            statGraficBar.style.background = mainTypeColor;
 
             statGrafic.appendChild(statValue);
             statGrafic.appendChild(statGraficBar);
@@ -283,6 +322,50 @@ function getShortPokeAtribute(index)
             return pokeAtributesLabels.speed;
         default:
             return pokeAtributesLabels.hp;
+    }
+}
+
+function getPokeCardColor(type)
+{
+    switch(type){
+        case "normal":
+            return pokeTypeColors.normal;
+        case "fighting":
+            return pokeTypeColors.fighting;
+        case "flying":
+            return pokeTypeColors.flying;
+        case "ground":
+            return pokeTypeColors.ground;
+        case "poison":
+            return pokeTypeColors.poison;
+        case "rock":
+            return pokeTypeColors.rock;
+        case "bug":
+            return pokeTypeColors.bug;
+        case "ghost":
+            return pokeTypeColors.ghost;
+        case "steel":
+            return pokeTypeColors.steel;
+        case "fire":
+            return pokeTypeColors.fire;
+        case "water":
+            return pokeTypeColors.water;
+        case "grass":
+            return pokeTypeColors.grass;
+        case "electric":
+            return pokeTypeColors.eletric;
+        case "psychic":
+            return pokeTypeColors.psychic;
+        case "ice":
+            return pokeTypeColors.ice;
+        case "dragon":
+            return pokeTypeColors.dragon;
+        case "dark":
+            return pokeTypeColors.dark;
+        case "fairy":
+            return pokeTypeColors.fairy;
+        default:
+            return pokeTypeColors.normal;   
     }
 }
 
