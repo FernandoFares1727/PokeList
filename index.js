@@ -143,8 +143,13 @@ function createPokemonCard(pokeData)
         pokeCard.setAttribute('id', pokeData.id);
 
         pokeCard.addEventListener('click', function() {
+            var isDisabled = pokeCard.disabled;
+            if (isDisabled == true)
+                return;
+
             var pokemonId = pokeCard.getAttribute('id');
             showPokeDetails(pokemonId);
+            pokeCardsDisabled(true);
         })
 
         pokeList.appendChild(pokeCard);
@@ -191,6 +196,7 @@ function createPokemonDetails(pokeData)
 
         turnBackButton.addEventListener('click', function() {
             removePokeDetails();
+            pokeCardsDisabled(false);
         })
 
         var pokeDetailsName = pokeDetails.querySelector('.pokeDetailsName');
@@ -227,7 +233,6 @@ function createPokemonDetails(pokeData)
         })
 
         var pokeDetailsCardAbout = pokeDetails.querySelector('.about');
-        console.log(pokeDetailsCardAbout);
         pokeDetailsCardAbout.style.color = mainTypeColor;
 
         /* construct pokeDetailsAtributes */
@@ -373,6 +378,14 @@ function removePokeDetails()
 {
     var pokeDetails = document.querySelector('.pokeDetails');
     document.body.removeChild(pokeDetails);
+}
+
+function pokeCardsDisabled(disable)
+{
+    var pokeCards = document.querySelectorAll('.pokeCard');
+    pokeCards.forEach(pokeCard => {
+        pokeCard.disabled = disable;
+    })
 }
 
 async function getPokemonDescription(pokeId) {
