@@ -9,6 +9,8 @@ const pokeCardPage = "index.html";
 const pokeDetailsFolder = "PokeDetails/";
 const pokeDetailsCardPage = "index.html";
 
+const language = "en";
+
 const searchs = {
     tagId : "tagId",
     tagName : "tagName"
@@ -392,6 +394,13 @@ async function getPokemonDescription(pokeId) {
   return fetch(mainUrl + "pokemon-species/" + pokeId + "/")
     .then(response => response.json())
     .then(function(result) { 
+
+        result.flavor_text_entries.forEach(r => {
+            if (r.language.name == language)
+                return r.flavor_text;
+        });
+
         return result.flavor_text_entries[0].flavor_text
+
     });
 }
