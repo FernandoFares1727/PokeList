@@ -395,12 +395,15 @@ async function getPokemonDescription(pokeId) {
     .then(response => response.json())
     .then(function(result) { 
 
+        var translatedText = result.flavor_text_entries[0].flavor_text;
         result.flavor_text_entries.forEach(r => {
             if (r.language.name == language)
-                return r.flavor_text;
+            {
+                translatedText = r.flavor_text;
+                return;
+            }
         });
 
-        return result.flavor_text_entries[0].flavor_text
-
+        return translatedText;
     });
 }
