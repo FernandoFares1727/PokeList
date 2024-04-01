@@ -71,15 +71,24 @@
   {
     min-height: 300px;
     display: flex;
+    gap: 10px;
     justify-content: center;
     flex-direction: column;
     background-color: var(--textColor);
     border-radius: 8px;
-    padding: 20px;
+    padding: 15px;
   }
 
   .pokeDetailsCardInfo p {
     text-align: center;
+  }
+
+  .about {
+    margin: 0px;
+  }
+
+  .stats {
+    margin: 0px;
   }
 
   .pokeDetailsCardTypes {
@@ -144,6 +153,7 @@
 
   .pokeDetailsCardDescription {
     max-width: 260px;
+    margin: 0px;
   }
 
   .pokeDetailsCardStats 
@@ -171,7 +181,7 @@
   .pokeDetailsCardStatsRows 
   {
     display: flex;
-    gap: 3px;
+    gap: 8px;
     align-items: center;
   }
 
