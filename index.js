@@ -212,6 +212,9 @@ function createPokemonDetails(pokeData)
         var pokeDetailsImage = pokeDetails.querySelector('.pokeDetailsImage').querySelector('img');
         pokeDetailsImage.src = pokeData.sprites.front_default;
 
+        var pokeDetailsPokeballImage = pokeDetails.querySelector('.pokeDetailsPokeBall');
+        pokeDetailsPokeballImage.src = './images/PokeBall.png';
+
         /* construct pokeDetailsCard */
 
         var pokeDetailsCard = pokeDetails.querySelector('.pokeDetailsCardInfo');
@@ -314,8 +317,6 @@ function createPokemonDetails(pokeData)
             statGrafic.appendChild(statGraficBar);
 
             pokeDetailsCardStatsValues.appendChild(statGrafic);
-            
-
         })
 
         document.body.appendChild(pokeDetails);
