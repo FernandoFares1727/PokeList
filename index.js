@@ -11,6 +11,8 @@ const pokeDetailsCardPage = "index.html";
 
 const language = "en";
 
+const statGraficBarOpacity = 0.5;
+
 const searchs = {
     tagId : "tagId",
     tagName : "tagName"
@@ -297,13 +299,22 @@ function createPokemonDetails(pokeData)
             var statPercentValue = (stat.base_stat / 233) * 100;
 
             var statGraficBar = document.createElement('div');
-            statGraficBar.style.width = statPercentValue + "%";
-            statGraficBar.style.background = mainTypeColor;
+            statGraficBar.classList.add('statGraficBar');
+            var statGraficBarContent = document.createElement('div');
+            
+            statGraficBar.style.width = 100 + "%";
+            statGraficBar.style.background = hexToRGBA(mainTypeColor, statGraficBarOpacity);
+            
+            statGraficBarContent.style.width = statPercentValue + "%";
+            statGraficBarContent.style.background = mainTypeColor;
+            
+            statGraficBar.appendChild(statGraficBarContent);
 
             statGrafic.appendChild(statValue);
             statGrafic.appendChild(statGraficBar);
 
             pokeDetailsCardStatsValues.appendChild(statGrafic);
+            
 
         })
 
@@ -374,6 +385,20 @@ function getPokeCardColor(type)
         default:
             return pokeTypeColors.normal;   
     }
+}
+
+// Função para converter código hexadecimal para RGBA
+function hexToRGBA(hex, alpha) {
+    // Remova o caractere '#' do início (se presente)
+    hex = hex.replace('#', '');
+
+    // Divida o código hexadecimal em componentes R, G, B
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+
+    // Retorne o formato RGBA com a opacidade especificada
+    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
 }
 
 function removePokeDetails()
