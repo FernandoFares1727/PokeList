@@ -1,6 +1,9 @@
 
 :root {
     --textColor: #FFFFFF;
+    --responsibleFontSize: 14px;
+    --responsibleImageSize: 120px;
+    --responsibleDetailsCardWidth: 250px;
 }
 
 .pokeDetails {
@@ -193,4 +196,92 @@
   .statGraficBar {
     border-radius: 10px;
     overflow: hidden;
+  }
+
+  @media screen and (max-width: 700px) {
+
+    .pokeDetails {
+      min-width: var(--responsibleDetailsCardWidth);
+      max-width: var(--responsibleDetailsCardWidth);
+    }
+
+    .pokeHeader {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pokeTitle button {
+      max-height: 20px;
+    }
+
+    .pokeTitle button img {
+      max-height: 19px;
+    }
+
+    .pokeDetailsName {
+      font-size: 20px;
+    }
+
+    .pokeDetailsId {
+      font-size: 20px;
+    }
+
+    .pokeDetailsPokeBall {
+      max-width: var(--responsibleImageSize);
+      max-height: var(--responsibleImageSize);
+    }
+
+    .pokeDetailsImage {
+      min-width: var(--responsibleImageSize);
+      min-height: var(--responsibleImageSize);
+      max-width: var(--responsibleImageSize);
+      max-height: var(--responsibleImageSize);
+      align-self: center;
+    }
+
+    .pokeDetailsImage img {
+      min-width: var(--responsibleImageSize);
+      min-height: var(--responsibleImageSize);
+      max-width: var(--responsibleImageSize);
+      max-height: var(--responsibleImageSize);
+    }
+
+    .pokeDetailsCardInfo {
+      gap: 6px;
+      padding: 7.5px;
+    }
+
+    .pokeDetailsCardTypes p {
+      margin: 8px 0px;
+      font-size: var(--responsibleFontSize);
+    }
+
+    .about {
+      font-size: var(--responsibleFontSize);
+    }
+
+    .stats {
+      font-size: var(--responsibleFontSize);
+    }
+
+    .pokeDetailsCardAtributesGrid p {
+      font-size: var(--responsibleFontSize);
+    }
+
+    .pokeDetailsCardDescription {
+      font-size: var(--responsibleFontSize);
+    }
+
+    .pokeDetailsCardStatsLabels p {
+      font-size: var(--responsibleFontSize);
+    }
+
+    .pokeDetailsCardStatsRows p {
+      font-size: var(--responsibleFontSize);
+    }
+
+    .pokeDetailsCardStatsRows div
+    {
+      height: 6px;
+    }  
   }

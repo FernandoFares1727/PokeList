@@ -2,6 +2,10 @@
 
 @import url("./PokeDetails/style.css");
 
+:root {
+    --responsibleCardSize: 120px;
+}
+
 li {
     list-style-type: none;
 }
@@ -49,3 +53,24 @@ li {
     font-size: 20px;
   }
   
+
+@media screen and (max-width: 700px)
+{
+    #pokeList {
+        justify-content: space-between;
+    }
+
+    .pokeCard {
+        max-width: var(--responsibleCardSize);
+    }
+
+    .pokeCard img {
+        max-width: var(--responsibleCardSize);
+        min-width: var(--responsibleCardSize);
+        min-height: var(--responsibleCardSize);
+    }
+
+    .pokeName {
+        font-size: 16px;
+    }
+}
