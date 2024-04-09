@@ -12,14 +12,12 @@ li {
 
 #pokeList {
     background-color: var(--pokeListBody);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between left;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 13px;
     padding: 12px 12px 24px;
     border-radius: 8px;
-  }  
+} 
 
 .pokeCard {
     border-radius: 8px;
@@ -28,7 +26,8 @@ li {
     border-radius: 4px;
     box-shadow: var(--pokeCardShadow);
     max-width: 250px;
-    max-height: 223.8px;
+    /*max-height: 223.8px;*/
+    max-height: 250px;
 }
 
 .pokeId {
@@ -46,18 +45,22 @@ li {
 .pokeName {
     margin: 0;
     text-align: center;
+    align-content: center;
     background-color: var(--pokeCardColorBody);
     text-transform: capitalize;
     border-radius: 10px 10px 0 0;
     padding: 4px;
     font-size: 20px;
-  }
+    flex-grow: 1;
+}
   
 
 @media screen and (max-width: 700px)
 {
+
     #pokeList {
-        justify-content: space-between;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        justify-items: center;
     }
 
     .pokeCard {
