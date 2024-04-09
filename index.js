@@ -18,6 +18,11 @@ const searchs = {
     tagName : "tagName"
 };
 
+const searchDisplay = {
+    show : "flex",
+    hide : "none"
+};
+
 const pokeAtributesLabels = {
     hp : "HP",
     attack : "ATK",
@@ -88,7 +93,7 @@ function searchPokemon()
         if (valueInput == '')
         {
             pokeCards.forEach(pokeCard => {
-                pokeCard.style.display = "block";
+                pokeCard.style.display = searchDisplay.show;
             })
         }
 
@@ -97,7 +102,7 @@ function searchPokemon()
             pokeCards.forEach(pokeCard => {
                 const pokeCardId = pokeCard.querySelector('.pokeId').textContent.replace('#','');
                 const isVisible = pokeCardId == valueInput;
-                pokeCard.style.display = isVisible ? "block" : "none";
+                pokeCard.style.display = isVisible ? searchDisplay.show : searchDisplay.hide;
             })
         }
 
@@ -107,7 +112,7 @@ function searchPokemon()
             pokeCards.forEach(pokeCard => {
                 const pokeName = pokeCard.querySelector('.pokeName').textContent.toLowerCase();
                 const isVisible = pokeName.includes(valueInput);
-                pokeCard.style.display = isVisible ? "block" : "none";
+                pokeCard.style.display = isVisible ? searchDisplay.show : searchDisplay.hide;
             })
         }
     })
