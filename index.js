@@ -247,7 +247,7 @@ function createPokemonDetails(pokeData)
         var pokeDetailsHeight = pokeDetailsCard.querySelector('.pokeDetailsCardHeightValue');
         pokeDetailsHeight.textContent = pokeData.height/10 + "m";
 
-        var pokeDetailsMoves = pokeDetails.querySelector('.pokeDetailsCardMovesValue');
+        /*var pokeDetailsMoves = pokeDetails.querySelector('.pokeDetailsCardMovesValue');
         var moves = pokeData.moves;
 
         let count = 0;
@@ -260,7 +260,7 @@ function createPokemonDetails(pokeData)
             } else {
                 return; // Exit the loop early
             }
-        });
+        });*/
 
         /* construct description */
 
