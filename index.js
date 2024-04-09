@@ -200,8 +200,17 @@ function createPokemonDetails(pokeData)
 
         turnBackButton.addEventListener('click', function() {
             removePokeDetails();
-            pokeCardsDisabled(false);
         })
+
+        document.body.addEventListener('click', handleOutsideClick);
+
+        // Function to handle clicks outside of pokeDetails
+        function handleOutsideClick(event) {
+          if (!pokeDetails.contains(event.target)) {
+            removePokeDetails();
+            document.body.removeEventListener('click', handleOutsideClick);
+          }
+        }
 
         var pokeDetailsName = pokeDetails.querySelector('.pokeDetailsName');
         pokeDetailsName.textContent = pokeData.name;
@@ -405,6 +414,8 @@ function removePokeDetails()
 {
     var pokeDetails = document.querySelector('.pokeDetails');
     document.body.removeChild(pokeDetails);
+
+    pokeCardsDisabled(false);
 }
 
 function pokeCardsDisabled(disable)
