@@ -88,16 +88,15 @@ function searchPokemon()
         var valueInput = searchInput.value.trim().toLowerCase();
         var actualSearch = document.querySelector('#search').querySelector('button').querySelector('img').getAttribute('id');
 
-        var pokeCards = document.querySelectorAll('.pokeCard');
-
         if (valueInput == '')
         {
-            pokeCards.forEach(pokeCard => {
-                pokeCard.style.display = searchDisplay.show;
-            })
+            showAllPokemons();
+            return;
         }
 
-        else if (actualSearch == searchs.tagId)
+        var pokeCards = document.querySelectorAll('.pokeCard');
+
+        if (actualSearch == searchs.tagId)
         {
             pokeCards.forEach(pokeCard => {
                 const pokeCardId = pokeCard.querySelector('.pokeId').textContent.replace('#','');
@@ -180,6 +179,20 @@ function changeSearch(element)
         img.src = "./images/tag.svg";
         img.setAttribute('id', searchs.tagId);
     }
+
+    var searchInput = document.querySelector('#search').querySelector('input');
+    searchInput.value = "";
+
+    showAllPokemons();
+}
+
+function showAllPokemons()
+{
+    var pokeCards = document.querySelectorAll('.pokeCard');
+
+    pokeCards.forEach(pokeCard => {
+        pokeCard.style.display = searchDisplay.show;
+    })
 }
 
 function showPokeDetails(pokeId)
