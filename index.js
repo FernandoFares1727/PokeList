@@ -1,4 +1,5 @@
-const pokeRange = 900;
+const maxPage = 7;
+const pokeByPage = 150;
 
 const mainUrl = "https://pokeapi.co/api/v2/";
 const limitParam = "pokemon?limit=";
@@ -58,7 +59,8 @@ loadPage();
 function loadPage()
 {
     enableInput(false);
-    getPokemonList(pokeRange);
+    createPageSelect();
+    getPokemonList();
     searchPokemon();
     enableInput(true);
 }
@@ -69,15 +71,37 @@ function enableInput(enable)
     searchInput.disabled = !enable;
 }
 
-function getPokemonList(pokeRange)
+function createPageSelect()
 {
-    fetch(mainUrl + limitParam + pokeRange)
-    .then(response => response.json())
-    .then(function(allpokemon) {
-        allpokemon.results.forEach(function(pokemon){
-            fetchPokemonData(pokemon);
-          })
-    });
+    var pageSelect = document.querySelector('#page');
+
+    for (let i = 0; i < maxPage; i++)
+    {
+        var actualOption = i + 1;
+        var option = document.createElement('option');
+        option.textContent = actualOption;
+        option.value = actualOption;
+        pageSelect.appendChild(option);
+    }
+
+    pageSelect.addEventListener('change', function (event) {
+        var selectedPage = event.target.value;
+        removePokeCards();
+        getPokemonList(selectedPage);
+    })
+}
+
+function getPokemonList(page = 1)
+{
+    var minInterval = page > 1 
+                    ? 1 + (pokeByPage * (page -1)) 
+                    : 1;
+
+    for (let i = 0; i < pokeByPage; i++)
+    {
+        fetchPokemonData(minInterval);
+        minInterval++;
+    }
 }
 
 function searchPokemon()
@@ -117,8 +141,9 @@ function searchPokemon()
     })
 }
 
-function fetchPokemonData(pokemon){
-    var url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
+function fetchPokemonData(pokemonId){
+    //var url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
+    var url = mainUrl + "pokemon/" + pokemonId + "/";
     fetch(url)
     .then(response => response.json())
     .then(function(pokeData){
@@ -426,6 +451,16 @@ function hexToRGBA(hex, alpha) {
 
     // Retorne o formato RGBA com a opacidade especificada
     return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+}
+
+function removePokeCards()
+{
+    var pokeList = document.querySelector('#pokeList');
+    var pokeCards = document.querySelectorAll('.pokeCard');
+
+    pokeCards.forEach(pokeCard => {
+        pokeList.removeChild(pokeCard);
+    })
 }
 
 function removePokeDetails()

@@ -4,6 +4,7 @@
     --bodyColor: #DC0A2D;
     --headerFont: #FFFFFF;
     --SearchButtonHover: #B8B8B8;
+    --pageSelectorBorderColor: #ccc;
     --pokeListBody: #FFFFFF;
     --pokeCardColorBody:#EFEFEF;
     --pokeCardShadow: 0 0 5px 1px rgba(0, 0, 0, 0.3);
@@ -71,4 +72,27 @@ body {
 
 #search button:hover {
     background-color: var(--SearchButtonHover);
+}
+
+#pageContainer {
+    display: flex;
+    flex: 1;
+    justify-content: right;
+}
+
+#page {
+    /* Styles for the select element */
+    border: 1px solid var(--pageSelectorBorderColor); /* Add a border */
+    padding: 5px; /* Add padding */
+    border-radius: 4px; /* Add rounded corners */
+    font-size: 16px; /* Set font size */
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+@media screen and ((max-width: 700px) or (max-height: 400px)) {
+    
+    #page {
+        font-size: 12px;
+    }
 }
