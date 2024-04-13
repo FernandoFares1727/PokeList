@@ -98,13 +98,46 @@ function getPokemonList(page = 1)
 {
     var minInterval = page > 1 
                     ? 1 + (pokeByPage * (page -1)) 
-                    : 1;
+                    : 1;    
+                    
+    progressBar();
 
     for (let i = 0; i < pokeByPage; i++)
     {
         fetchPokemonData(minInterval);
         minInterval++;
     }
+}
+
+function progressBar()
+{
+    var progressBar = document.createElement('div');
+    progressBar.classList.add('loader');
+
+    document.body.appendChild(progressBar);
+
+    var pokeList = document.querySelector('#pokeList');
+
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+            // Check if all added nodes are children of pokeList
+            if (mutation.target === pokeList) {
+              const totalChildren = pokeList.children.length;
+      
+              if (totalChildren === pokeByPage) {
+                document.body.removeChild(progressBar);
+                observer.disconnect();
+              }
+            }
+          }
+        });
+      });
+      
+    observer.observe(pokeList, {
+        childList: true,
+        subtree: true
+    }); 
 }
 
 function searchPokemon()
