@@ -1,4 +1,5 @@
 @import url("./Components/PokeCard/style.css");
+@import url("./Progress/style.css");
 
 :root {
     --bodyColor: #DC0A2D;
