@@ -7,8 +7,6 @@
 }
 
 .pokeDetails {
-    min-width: 300px;
-    min-height: 400px;
     margin: 0px;
     padding: 4px;
     position: fixed;
@@ -72,10 +70,8 @@
 
   .pokeDetailsCardInfo
   {
-    min-height: 300px;
     display: flex;
     gap: 10px;
-    justify-content: center;
     flex-direction: column;
     background-color: var(--textColor);
     border-radius: 8px;
@@ -136,6 +132,10 @@
     display: flex;
     justify-content: center;
     gap: 8px;
+  }
+
+  .pokeDetailsCardAtributesGridValue img {
+    max-height: 50.4px;
   }
 
   .pokeDetailsCardAtributeDescription {
@@ -211,6 +211,53 @@
       flex-direction: column;
     }
 
+    .pokeDetailsPokeBall {
+      max-width: var(--responsibleImageSize);
+      max-height: var(--responsibleImageSize);
+    }
+
+    .pokeDetailsCardInfo {
+      gap: 6px;
+      padding: 7.5px;
+    }
+  }
+
+  @media screen and (max-height: 630px)
+  {
+    .pokeDetails {
+      display: flex;
+      gap: 10px;
+      max-height: 250px;
+      min-width: 400px;
+    }
+
+    .pokeHeader {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pokeTitle {
+      gap: 4px;
+    }
+
+    .pokeDetailsPokeBall {
+      display: none;
+    }
+
+    .pokeDetailsCardInfo {
+      gap: 6px;
+      padding: 7.5px;
+      overflow: auto;
+    }
+
+    .pokeDetailsCardTypes {
+      gap: 8px;
+    }
+  }
+
+  @media screen and ((max-width: 700px) or (max-height: 630px))
+  {
+
     .pokeTitle button {
       max-height: 20px;
     }
@@ -227,11 +274,6 @@
       font-size: 20px;
     }
 
-    .pokeDetailsPokeBall {
-      max-width: var(--responsibleImageSize);
-      max-height: var(--responsibleImageSize);
-    }
-
     .pokeDetailsImage {
       min-width: var(--responsibleImageSize);
       min-height: var(--responsibleImageSize);
@@ -245,11 +287,6 @@
       min-height: var(--responsibleImageSize);
       max-width: var(--responsibleImageSize);
       max-height: var(--responsibleImageSize);
-    }
-
-    .pokeDetailsCardInfo {
-      gap: 6px;
-      padding: 7.5px;
     }
 
     .pokeDetailsCardTypes p {
