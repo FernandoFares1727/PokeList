@@ -85,6 +85,9 @@ function createPageSelect()
     }
 
     pageSelect.addEventListener('change', function (event) {
+
+        clearSearchInput();
+
         var selectedPage = event.target.value;
         removePokeCards();
         getPokemonList(selectedPage);
@@ -205,9 +208,7 @@ function changeSearch(element)
         img.setAttribute('id', searchs.tagId);
     }
 
-    var searchInput = document.querySelector('#search').querySelector('input');
-    searchInput.value = "";
-
+    clearSearchInput();
     showAllPokemons();
 }
 
@@ -495,4 +496,10 @@ async function getPokemonDescription(pokeId) {
 
         return translatedText;
     });
+}
+
+function clearSearchInput()
+{
+    var searchInput = document.querySelector('#search').querySelector('input');
+    searchInput.value = "";
 }
