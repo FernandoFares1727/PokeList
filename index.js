@@ -1,5 +1,6 @@
-const maxPage = 7;
+var maxPage = 0;
 const pokeByPage = 150;
+const maxPokemons = 1025;
 
 const mainUrl = "https://pokeapi.co/api/v2/";
 const limitParam = "pokemon?limit=";
@@ -59,6 +60,7 @@ loadPage();
 function loadPage()
 {
     enableInput(false);
+    setMaxPages();
     createPageSelect();
     getPokemonList();
     searchPokemon();
@@ -69,6 +71,10 @@ function enableInput(enable)
 {
     var searchInput = document.querySelector('#search').querySelector('input');
     searchInput.disabled = !enable;
+}
+
+function setMaxPages() {
+    maxPage = Math.ceil(maxPokemons / pokeByPage);
 }
 
 function createPageSelect()
@@ -94,22 +100,31 @@ function createPageSelect()
     })
 }
 
-function getPokemonList(page = 1)
+async function getPokemonList(page = 1)
 {
     var minInterval = page > 1 
                     ? 1 + (pokeByPage * (page -1)) 
                     : 1;    
-                    
-    progressBar();
+
+    var progressBar = document.createElement('div');
+    progressBar.classList.add('loader');
+    document.body.appendChild(progressBar);
+
+    var promisses = [];
 
     for (let i = 0; i < pokeByPage; i++)
     {
-        fetchPokemonData(minInterval);
+        if (minInterval > maxPokemons)
+            break;
+        promisses.push(fetchPokemonData(minInterval));
         minInterval++;
     }
+
+    await Promise.all(promisses);
+    document.body.removeChild(progressBar);
 }
 
-function progressBar()
+/*function progressBar()
 {
     var progressBar = document.createElement('div');
     progressBar.classList.add('loader');
@@ -137,8 +152,8 @@ function progressBar()
     observer.observe(pokeList, {
         childList: true,
         subtree: true
-    }); 
-}
+    });
+}*/
 
 function searchPokemon()
 {
@@ -179,19 +194,21 @@ function searchPokemon()
 
 function fetchPokemonData(pokemonId){
     //var url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
-    var url = mainUrl + "pokemon/" + pokemonId + "/";
-    fetch(url)
-    .then(response => response.json())
-    .then(function(pokeData){
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`;
+
+    return fetch(url)
+      .then(response => response.json())
+      .then(pokeData => {
         createPokemonCard(pokeData);
-    });
+        return pokeData; // Return the Pokemon data for potential further use
+    })
 }
 
 function createPokemonCard(pokeData)
 {
     var pokeList = document.querySelector('#pokeList');
 
-    fetch(componentsFolder + pokeCardFolder + pokeCardPage)
+    return fetch(componentsFolder + pokeCardFolder + pokeCardPage)
     .then(response => response.text())
     .then(html => {
 
