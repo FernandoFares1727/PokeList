@@ -59,10 +59,11 @@ loadPage();
 
 function loadPage()
 {
+    var localPage = getLocalPage();
     enableInput(false);
     setMaxPages();
-    createPageSelect();
-    getPokemonList();
+    createPageSelect(localPage);
+    getPokemonList(localPage);
     searchPokemon();
     enableInput(true);
 }
@@ -77,7 +78,7 @@ function setMaxPages() {
     maxPage = Math.ceil(maxPokemons / pokeByPage);
 }
 
-function createPageSelect()
+function createPageSelect(localPage)
 {
     var pageSelect = document.querySelector('#page');
 
@@ -87,6 +88,10 @@ function createPageSelect()
         var option = document.createElement('option');
         option.textContent = actualOption;
         option.value = actualOption;
+
+        if (actualOption == localPage)
+            option.selected = true;
+
         pageSelect.appendChild(option);
     }
 
@@ -96,6 +101,7 @@ function createPageSelect()
 
         var selectedPage = event.target.value;
         removePokeCards();
+        setLocalPage(selectedPage);
         getPokemonList(selectedPage);
     })
 }
@@ -273,7 +279,7 @@ function showAllPokemons()
 
 function showPokeDetails(pokeId)
 {
-    fetch(mainUrl + "pokemon" + "/" + pokeId + "/")
+    fetch(mainUrl + 'pokemon/${pokeId}/')
     .then(response => response.json())
     .then(function(pokeData) {
         createPokemonDetails(pokeData);
@@ -417,8 +423,6 @@ function createPokemonDetails(pokeData)
             statGrafic.appendChild(statGraficBar);
 
             pokeDetailsCardStatsValues.appendChild(statGrafic);
-            
-
         })
 
         document.body.appendChild(pokeDetails);
@@ -552,4 +556,18 @@ function clearSearchInput()
 {
     var searchInput = document.querySelector('#search').querySelector('input');
     searchInput.value = "";
+}
+
+function getLocalPage()
+{
+    var localPage = localStorage.getItem('pokePage');
+    console.log(localPage);
+    return localPage != null 
+        ? localPage 
+        : 1;
+}
+
+function setLocalPage(page)
+{
+    localStorage.setItem('pokePage', page);
 }
