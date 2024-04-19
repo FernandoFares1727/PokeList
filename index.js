@@ -244,7 +244,7 @@ function showAllPokemons()
 
 function showPokeDetails(pokeId)
 {
-    fetch(mainUrl + 'pokemon/${pokeId}/')
+    fetch(`${mainUrl}/pokemon/${pokeId}/`)
     .then(response => response.json())
     .then(function(pokeData) {
         createPokemonDetails(pokeData);
