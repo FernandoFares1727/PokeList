@@ -60,6 +60,8 @@ loadPage();
 function loadPage()
 {
     var localPage = getLocalPage();
+    var localSearch = getLocalSearch();
+    setLocalSearch(localSearch);
     enableInput(false);
     setMaxPages();
     createPageSelect(localPage);
@@ -129,37 +131,6 @@ async function getPokemonList(page = 1)
     await Promise.all(promisses);
     document.body.removeChild(progressBar);
 }
-
-/*function progressBar()
-{
-    var progressBar = document.createElement('div');
-    progressBar.classList.add('loader');
-
-    document.body.appendChild(progressBar);
-
-    var pokeList = document.querySelector('#pokeList');
-
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.addedNodes.length) {
-            // Check if all added nodes are children of pokeList
-            if (mutation.target === pokeList) {
-              const totalChildren = pokeList.children.length;
-      
-              if (totalChildren === pokeByPage) {
-                document.body.removeChild(progressBar);
-                observer.disconnect();
-              }
-            }
-          }
-        });
-      });
-      
-    observer.observe(pokeList, {
-        childList: true,
-        subtree: true
-    });
-}*/
 
 function searchPokemon()
 {
@@ -254,15 +225,9 @@ function changeSearch(element)
     var actualSearch = img.getAttribute('id');
 
     if (actualSearch == searchs.tagId)
-    {
-        img.src = "./images/tagName.svg";
-        img.setAttribute('id',searchs.tagName);
-    }
+        setLocalSearch(searchs.tagName);
     else
-    {
-        img.src = "./images/tag.svg";
-        img.setAttribute('id', searchs.tagId);
-    }
+        setLocalSearch(searchs.tagId);
 
     clearSearchInput();
     showAllPokemons();
@@ -561,7 +526,6 @@ function clearSearchInput()
 function getLocalPage()
 {
     var localPage = localStorage.getItem('pokePage');
-    console.log(localPage);
     return localPage != null 
         ? localPage 
         : 1;
@@ -570,4 +534,28 @@ function getLocalPage()
 function setLocalPage(page)
 {
     localStorage.setItem('pokePage', page);
+}
+
+function getLocalSearch()
+{
+    var localSearch = localStorage.getItem('pokeSearch');
+    return localSearch != null
+        ? localSearch
+        : searchs.tagId;
+}
+
+function setLocalSearch(search) 
+{
+    localStorage.setItem('pokeSearch', search);
+    changeSearchImg(search);
+}
+
+function changeSearchImg(search)
+{
+    var img = document.querySelector('#search').querySelector('img');
+
+    img.src = search == searchs.tagId 
+        ? "./images/tag.svg"
+        : "./images/tagName.svg";
+    img.setAttribute('id', search);
 }
