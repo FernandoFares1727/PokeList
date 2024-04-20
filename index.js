@@ -1,59 +1,40 @@
-var maxPage = 0;
-const pokeByPage = 150;
-const maxPokemons = 1025;
 
-const mainUrl = "https://pokeapi.co/api/v2/";
-const limitParam = "pokemon?limit=";
+import 
+{
+    mainUrl,
+    componentsFolder,
+    pokeCardFolder,
+    pokeCardPage,
+    pokeDetailsFolder,
+    pokeDetailsCardPage
+} from "./Modules/urlsModule.js";
 
-const componentsFolder = "./Components/";
-const pokeCardFolder = "PokeCard/"
-const pokeCardPage = "index.html";
-const pokeDetailsFolder = "PokeDetails/";
-const pokeDetailsCardPage = "index.html";
+import 
+{
+    getShortPokeAtribute,
+    getPokeCardColor
+} from "./Modules/attributesModule.js";
 
-const language = "en";
+import 
+{
+    clearSearchInput,
+    getLocalSearch,
+    setLocalSearch,
+    searchPokemon,
+    changeSearch,
+} from "./Modules/searchModule.js";
 
-const statGraficBarOpacity = 0.5;
+import 
+{
+    pokeByPage,
+    maxPokemons,
+    getLocalPage,
+    setLocalPage,
+    getMaxPages
+} from "./Modules/pageModule.js";
 
-const searchs = {
-    tagId : "tagId",
-    tagName : "tagName"
-};
-
-const searchDisplay = {
-    show : "flex",
-    hide : "none"
-};
-
-const pokeAtributesLabels = {
-    hp : "HP",
-    attack : "ATK",
-    defense : "DEF",
-    specialAttack : "SATK",
-    speacialDefense : "SDEF",
-    speed : "SPD"
-};
-
-const pokeTypeColors = {
-    normal: "#AAA67F",
-    fighting: "#C12239",
-    flying: "A891EC",
-    ground: "#DEC16B",
-    poison: "#A43E9E",
-    rock: "#B69E31",
-    bug: "#A7B723",
-    ghost: "#70559B",
-    steel: "#B7B9D0",
-    fire: "#F57D31",
-    water: "#6493EB",
-    grass: "#74CB48",
-    eletric: "#F9CF30",
-    psychic: "#FB5584",
-    ice: "#9AD6DF",
-    dragon: "#7037FF",
-    dark: "#75574C",
-    fairy: "#E69EAC"
-}
+import hexToRGBA from "./Modules/hexToRGBAModule.js";
+import getPokemonDescription from "./Modules/getPokemonDescriptionModule.js";
 
 loadPage();
 
@@ -61,13 +42,21 @@ function loadPage()
 {
     var localPage = getLocalPage();
     var localSearch = getLocalSearch();
+    enableButtonEvents();
     setLocalSearch(localSearch);
     enableInput(false);
-    setMaxPages();
     createPageSelect(localPage);
     getPokemonList(localPage);
     searchPokemon();
     enableInput(true);
+}
+
+function enableButtonEvents()
+{
+    var search = document.querySelector('#search').querySelector('button');
+    search.addEventListener('click', function () {
+        changeSearch();
+    })
 }
 
 function enableInput(enable)
@@ -76,13 +65,10 @@ function enableInput(enable)
     searchInput.disabled = !enable;
 }
 
-function setMaxPages() {
-    maxPage = Math.ceil(maxPokemons / pokeByPage);
-}
-
 function createPageSelect(localPage)
 {
     var pageSelect = document.querySelector('#page');
+    var maxPage = getMaxPages();
 
     for (let i = 0; i < maxPage; i++)
     {
@@ -132,43 +118,6 @@ async function getPokemonList(page = 1)
     document.body.removeChild(progressBar);
 }
 
-function searchPokemon()
-{
-    var searchInput = document.querySelector('#search').querySelector('input');
-
-    searchInput.addEventListener("input", function() {
-        var valueInput = searchInput.value.trim().toLowerCase();
-        var actualSearch = document.querySelector('#search').querySelector('button').querySelector('img').getAttribute('id');
-
-        if (valueInput == '')
-        {
-            showAllPokemons();
-            return;
-        }
-
-        var pokeCards = document.querySelectorAll('.pokeCard');
-
-        if (actualSearch == searchs.tagId)
-        {
-            pokeCards.forEach(pokeCard => {
-                const pokeCardId = pokeCard.querySelector('.pokeId').textContent.replace('#','');
-                const isVisible = pokeCardId == valueInput;
-                pokeCard.style.display = isVisible ? searchDisplay.show : searchDisplay.hide;
-            })
-        }
-
-        else if (actualSearch == searchs.tagName)
-        {
-            valueInput = valueInput
-            pokeCards.forEach(pokeCard => {
-                const pokeName = pokeCard.querySelector('.pokeName').textContent.toLowerCase();
-                const isVisible = pokeName.includes(valueInput);
-                pokeCard.style.display = isVisible ? searchDisplay.show : searchDisplay.hide;
-            })
-        }
-    })
-}
-
 function fetchPokemonData(pokemonId){
     //var url = pokemon.url // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}/`;
@@ -216,29 +165,6 @@ function createPokemonCard(pokeData)
         })
 
         pokeList.appendChild(pokeCard);
-    })
-}
-
-function changeSearch(element)
-{
-    var img = element.querySelector('img');
-    var actualSearch = img.getAttribute('id');
-
-    if (actualSearch == searchs.tagId)
-        setLocalSearch(searchs.tagName);
-    else
-        setLocalSearch(searchs.tagId);
-
-    clearSearchInput();
-    showAllPokemons();
-}
-
-function showAllPokemons()
-{
-    var pokeCards = document.querySelectorAll('.pokeCard');
-
-    pokeCards.forEach(pokeCard => {
-        pokeCard.style.display = searchDisplay.show;
     })
 }
 
@@ -377,7 +303,7 @@ function createPokemonDetails(pokeData)
             var statGraficBarContent = document.createElement('div');
             
             statGraficBar.style.width = 100 + "%";
-            statGraficBar.style.background = hexToRGBA(mainTypeColor, statGraficBarOpacity);
+            statGraficBar.style.background = hexToRGBA(mainTypeColor);
             
             statGraficBarContent.style.width = statPercentValue + "%";
             statGraficBarContent.style.background = mainTypeColor;
@@ -392,85 +318,6 @@ function createPokemonDetails(pokeData)
 
         document.body.appendChild(pokeDetails);
     })
-}
-
-function getShortPokeAtribute(index)
-{
-    switch(index)
-    {
-        case 0:
-            return pokeAtributesLabels.hp;
-        case 1:
-            return pokeAtributesLabels.attack;
-        case 2: 
-            return pokeAtributesLabels.defense;
-        case 3:
-            return pokeAtributesLabels.specialAttack;
-        case 4:
-            return pokeAtributesLabels.speacialDefense;
-        case 5: 
-            return pokeAtributesLabels.speed;
-        default:
-            return pokeAtributesLabels.hp;
-    }
-}
-
-function getPokeCardColor(type)
-{
-    switch(type){
-        case "normal":
-            return pokeTypeColors.normal;
-        case "fighting":
-            return pokeTypeColors.fighting;
-        case "flying":
-            return pokeTypeColors.flying;
-        case "ground":
-            return pokeTypeColors.ground;
-        case "poison":
-            return pokeTypeColors.poison;
-        case "rock":
-            return pokeTypeColors.rock;
-        case "bug":
-            return pokeTypeColors.bug;
-        case "ghost":
-            return pokeTypeColors.ghost;
-        case "steel":
-            return pokeTypeColors.steel;
-        case "fire":
-            return pokeTypeColors.fire;
-        case "water":
-            return pokeTypeColors.water;
-        case "grass":
-            return pokeTypeColors.grass;
-        case "electric":
-            return pokeTypeColors.eletric;
-        case "psychic":
-            return pokeTypeColors.psychic;
-        case "ice":
-            return pokeTypeColors.ice;
-        case "dragon":
-            return pokeTypeColors.dragon;
-        case "dark":
-            return pokeTypeColors.dark;
-        case "fairy":
-            return pokeTypeColors.fairy;
-        default:
-            return pokeTypeColors.normal;   
-    }
-}
-
-// Função para converter código hexadecimal para RGBA
-function hexToRGBA(hex, alpha) {
-    // Remova o caractere '#' do início (se presente)
-    hex = hex.replace('#', '');
-
-    // Divida o código hexadecimal em componentes R, G, B
-    var r = parseInt(hex.substring(0, 2), 16);
-    var g = parseInt(hex.substring(2, 4), 16);
-    var b = parseInt(hex.substring(4, 6), 16);
-
-    // Retorne o formato RGBA com a opacidade especificada
-    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
 }
 
 function removePokeCards()
@@ -497,65 +344,4 @@ function pokeCardsDisabled(disable)
     pokeCards.forEach(pokeCard => {
         pokeCard.disabled = disable;
     })
-}
-
-async function getPokemonDescription(pokeId) {
-  return fetch(mainUrl + "pokemon-species/" + pokeId + "/")
-    .then(response => response.json())
-    .then(function(result) { 
-
-        var translatedText = result.flavor_text_entries[0].flavor_text;
-        result.flavor_text_entries.forEach(r => {
-            if (r.language.name == language)
-            {
-                translatedText = r.flavor_text;
-                return;
-            }
-        });
-
-        return translatedText;
-    });
-}
-
-function clearSearchInput()
-{
-    var searchInput = document.querySelector('#search').querySelector('input');
-    searchInput.value = "";
-}
-
-function getLocalPage()
-{
-    var localPage = localStorage.getItem('pokePage');
-    return localPage != null 
-        ? localPage 
-        : 1;
-}
-
-function setLocalPage(page)
-{
-    localStorage.setItem('pokePage', page);
-}
-
-function getLocalSearch()
-{
-    var localSearch = localStorage.getItem('pokeSearch');
-    return localSearch != null
-        ? localSearch
-        : searchs.tagId;
-}
-
-function setLocalSearch(search) 
-{
-    localStorage.setItem('pokeSearch', search);
-    changeSearchImg(search);
-}
-
-function changeSearchImg(search)
-{
-    var img = document.querySelector('#search').querySelector('img');
-
-    img.src = search == searchs.tagId 
-        ? "./images/tag.svg"
-        : "./images/tagName.svg";
-    img.setAttribute('id', search);
 }
