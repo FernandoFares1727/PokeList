@@ -22,6 +22,7 @@ import
     setLocalSearch,
     searchPokemon,
     changeSearch,
+    changeSearchButtonDisabled
 } from "./Modules/searchModule.js";
 
 import 
@@ -30,11 +31,16 @@ import
     maxPokemons,
     getLocalPage,
     setLocalPage,
-    getMaxPages
+    getMaxPages,
+    changePageButtonDisabled
 } from "./Modules/pageModule.js";
 
 import hexToRGBA from "./Modules/hexToRGBAModule.js";
 import getPokemonDescription from "./Modules/getPokemonDescriptionModule.js";
+
+const bodyFreeze = {
+    freeze : 'freezeBody'
+};
 
 loadPage();
 
@@ -161,7 +167,7 @@ function createPokemonCard(pokeData)
 
             var pokemonId = pokeCard.getAttribute('id');
             showPokeDetails(pokemonId);
-            pokeCardsDisabled(true);
+            disableElementsWhenCallPokeDetails(true);
         })
 
         pokeList.appendChild(pokeCard);
@@ -335,7 +341,7 @@ function removePokeDetails()
     var pokeDetails = document.querySelector('.pokeDetails');
     document.body.removeChild(pokeDetails);
 
-    pokeCardsDisabled(false);
+    disableElementsWhenCallPokeDetails(false);
 }
 
 function pokeCardsDisabled(disable)
@@ -344,4 +350,18 @@ function pokeCardsDisabled(disable)
     pokeCards.forEach(pokeCard => {
         pokeCard.disabled = disable;
     })
+}
+
+function disableElementsWhenCallPokeDetails(disabled)
+{
+    pokeCardsDisabled(disabled);
+    changeSearchButtonDisabled(disabled);
+    changePageButtonDisabled(disabled);
+
+    var body = document.body;
+
+    if (disabled)
+        body.classList.add(bodyFreeze.freeze)
+    else
+        body.classList.remove(bodyFreeze.freeze);
 }

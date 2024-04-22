@@ -90,6 +90,12 @@ export function searchPokemon()
     })
 }
 
+export function changeSearchButtonDisabled(disabled)
+{
+    var searchButton = document.querySelector('#search').querySelector('button');
+    searchButton.disabled = disabled;
+}
+
 function showAllPokemons()
 {
     var pokeCards = document.querySelectorAll('.pokeCard');

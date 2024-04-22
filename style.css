@@ -17,6 +17,10 @@ body {
     margin-right: 20px;
 }
 
+.freezeBody {
+    overflow: hidden;
+}
+
 #pokeHeader {
     display: flex;
     flex-direction: column;

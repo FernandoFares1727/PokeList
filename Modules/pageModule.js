@@ -17,3 +17,9 @@ export function setLocalPage(page)
 export function getMaxPages() {
     return Math.ceil(maxPokemons / pokeByPage);
 }
+
+export function changePageButtonDisabled(disabled)
+{
+    var pageSelect = document.getElementById('page');
+    pageSelect.disabled = disabled;
+}
