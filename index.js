@@ -193,6 +193,11 @@ function createPokemonDetails(pokeData)
         pokeDetails.classList.add('pokeDetails');
 
         pokeDetails.innerHTML = html;
+
+        pokeDetails.addEventListener('mousedown', function(event) {
+            draggableElement(pokeDetails, event);
+        })
+
         var turnBackButton = pokeDetails.querySelector('button');
 
         turnBackButton.addEventListener('click', function() {
@@ -364,4 +369,31 @@ function disableElementsWhenCallPokeDetails(disabled)
         body.classList.add(bodyFreeze.freeze)
     else
         body.classList.remove(bodyFreeze.freeze);
+}
+
+function draggableElement(element, event)
+{
+    let startX = event.clientX;
+    let startY = event.clientY;
+
+    let offsetX, offsetY;
+
+    const mouseMove = (event) => {
+        offsetX = event.clientX - startX;
+        offsetY = event.clientY - startY;
+
+        element.style.left = (element.offsetLeft + offsetX) + 'px';
+        element.style.top = (element.offsetTop + offsetY) + 'px';
+
+        startX = event.clientX;
+        startY = event.clientY;
+    };
+
+    const mouseUp = () => {
+        document.removeEventListener('mousemove', mouseMove);
+        document.removeEventListener('mouseup', mouseUp);
+    };
+
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', mouseUp);
 }
